@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #202020; }
+  #anim { position: absolute; inset: 0; }
+  #anim svg, #anim canvas { width: 100%; height: 100%; display: block; }
+</style></head>
+<body>
+  <div id="anim"></div>
+  <script src="btanim://app/vendor/lottie.min.js"></script>
+  <script>
+    var anim = null;
+    window.preview.onInit(function (payload) {
+      document.body.style.background = '#' + payload.bg;
+      anim = lottie.loadAnimation({
+        container: document.getElementById('anim'),
+        renderer: payload.renderer || 'svg',
+        loop: false, autoplay: false, animationData: payload.animation,
+        rendererSettings: {
+          preserveAspectRatio: payload.preserveAspectRatio || 'xMidYMid meet',
+          progressiveLoad: false,
+          hideOnTransparent: false,
+        },
+      });
+    });
+    window.preview.onFrame(function (payload) {
+      if (!anim) return;
+      anim.goToAndStop(payload.frame, true);
+      window.__animFrame = anim.currentFrame;
+    });
+    window.preview.ready();
+  </script>
+</body></html>

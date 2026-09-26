@@ -1,0 +1,18 @@
+# 依赖与运行时（不要提交，含 Electron 二进制）
+node_modules/
+.package-lock.json
+
+# 本地调试产物
+.probe/
+*.log
+*.tgz
+capture.png
+run.json
+known-devices.json
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+desktop.ini

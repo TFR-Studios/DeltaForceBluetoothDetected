@@ -1,0 +1,44 @@
+{
+  "name": "bt-anim-overlay",
+  "version": "1.0.0",
+  "description": "蓝牙连接 / 扫到新设备时，在系统最顶层播放一段 Lottie 动画（三角洲行动风格 HUD 特效）",
+  "keywords": [
+    "bluetooth",
+    "lottie",
+    "overlay",
+    "always-on-top",
+    "electron",
+    "npx",
+    "bluetooth-scanner"
+  ],
+  "license": "MIT",
+  "main": "src/main.js",
+  "bin": {
+    "bt-anim": "bin/bt-anim.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "renderer/",
+    "vendor/",
+    "assets/",
+    "animation/",
+    "tools/",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node bin/bt-anim.js",
+    "test": "node --test",
+    "doctor": "node bin/bt-anim.js doctor",
+    "preview": "electron tools/preview.js",
+    "icons": "node tools/make-icons.js",
+    "postinstall": "node bin/postinstall.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "electron": "^44.0.0"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; img-src btanim: data: blob:; style-src 'unsafe-inline' btanim:; script-src btanim: 'unsafe-inline' 'unsafe-eval'; font-src btanim: data:; connect-src btanim:;" />
+  <title>bt-anim overlay</title>
+  <link rel="stylesheet" href="btanim://app/renderer/overlay.css" />
+</head>
+<body>
+  <div id="veil"></div>
+  <div id="stage"><div id="anim"></div></div>
+  <div id="caption" class="hidden"></div>
+  <script src="btanim://app/vendor/lottie.min.js"></script>
+  <script src="btanim://app/renderer/overlay.js"></script>
+</body>
+</html>
