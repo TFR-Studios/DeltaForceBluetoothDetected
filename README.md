@@ -2,14 +2,14 @@
 
 **电脑连接上蓝牙设备（或扫描到新设备）时，在系统最顶层播放一段 Lottie 动画。**
 
-动画文件是你提供的 `animation/data.json`（三角洲行动风格的 HUD 扫描特效），
+动画文件是仓库里的 `animation/data.json`（三角洲行动风格的 HUD 扫描特效）。
 程序把它做成一个「透明 + 置顶 + 鼠标穿透」的悬浮层：平时完全看不见，一旦有蓝牙事件就在所有窗口之上播放一次，播完自动消失。
 
 ---
 
 ## 快速开始
 
-在项目目录里直接运行（推荐先看 [首次运行](#首次运行会下载-electron)）：
+在项目目录里直接运行：
 
 ```bash
 # 立刻验证效果：启动并播放一次
@@ -28,12 +28,11 @@ npx . stop
 ```
 
 > 发布到 npm 之后，把 `npx .` 换成 `npx bt-anim-overlay` 即可。
-> 也可以 `npm start -- --test` 或 `npm link` 后使用 `bt-anim` 命令。
+> 也可以 `npm start -- --test`，或 `npm link` 之后直接用 `bt-anim` 命令。
 
 ### 首次运行会下载 Electron
 
-悬浮层需要 Electron 运行时（约 100MB）。首次启动时会自动下载，
-如果直连 GitHub 很慢或失败，程序会自动改用国内镜像重试：
+悬浮层需要 Electron 运行时（约 100MB）。首次启动时自动下载；如果直连 GitHub 很慢或失败，程序会自动改用国内镜像重试。
 
 ```bash
 # 也可以手动指定镜像后再启动
@@ -49,16 +48,15 @@ npx . --test
 
 | 事件 | 说明 | 默认 |
 | --- | --- | --- |
-| `connected` | 有蓝牙设备连上了电脑（耳机、手柄、键鼠、手机…） | ✅ 开 |
-| `paired` | 系统里出现了新配对的设备 | ✅ 开 |
-| `discovered` | 附近扫描到从没见过的新设备（智能家居、别人的耳机…） | ✅ 开 |
-| `disconnected` | 设备断开 | ❌ 关 |
+| `connected` | 有蓝牙设备连上了电脑（耳机、手柄、键鼠、手机…） | 开 |
+| `paired` | 系统里出现了新配对的设备 | 开 |
+| `discovered` | 附近扫描到从没见过的新设备（智能家居、别人的耳机…） | 开 |
+| `disconnected` | 设备断开 | 关 |
 
 用 `--only connected,paired` 只保留想要的事件。
 几秒内同时发生多个事件（比如手机同时连了经典蓝牙 + BLE）会自动合并成**一次**播放，并按设备名去重。
 
-**开机后的第一次扫描不会触发动画**（只把当时看到的设备记成基线），
-之后出现的新设备才会触发；记忆保存在状态目录里，重启程序依然有效。
+**开机后的第一次扫描不会触发动画**（只把当时看到的设备记成基线），之后出现的新设备才会触发；记忆保存在状态目录里，重启程序依然有效。
 
 ---
 
@@ -97,7 +95,7 @@ npx . --test
 
 ### 命令
 
-```
+```text
 start(默认)  启动悬浮层并监听蓝牙
 trigger      立刻播放一次（测试）
 scan         立刻扫描一次附近设备
@@ -112,9 +110,7 @@ doctor       环境自检
 
 ## 配置文件
 
-在项目目录放一个 `bt-anim.config.json`（或用 `--config` 指定），
-或者在状态目录放 `config.json`（Windows：`%LOCALAPPDATA%\bt-anim-overlay`）。
-命令行参数优先级最高。
+在项目目录放一个 `bt-anim.config.json`（或用 `--config` 指定），或者在状态目录放 `config.json`（Windows：`%LOCALAPPDATA%\bt-anim-overlay`）。命令行参数优先级最高。
 
 ```json
 {
@@ -151,8 +147,7 @@ macOS / Linux 也有基础实现（`system_profiler` / `bluetoothctl` 轮询）�
 加上 `--backdrop 0.35 --boost 1.4` 会明显很多。想确认程序是否正常，用 `--test` 播放一次。
 
 **游戏里看不到？**
-独占全屏（Exclusive Fullscreen）会挡住所有置顶窗口，这是 Windows 的限制。
-把游戏显示模式改成「**无边框窗口 / 窗口化全屏**」即可看到悬浮层。
+独占全屏（Exclusive Fullscreen）会挡住所有置顶窗口，这是 Windows 的限制。把游戏显示模式改成**无边框窗口 / 窗口化全屏**即可看到悬浮层。
 
 **悬浮层会挡住我点鼠标吗？**
 不会。窗口设置了鼠标穿透（click-through）并且不抢焦点，也不出现在任务栏。
@@ -163,30 +158,29 @@ macOS / Linux 也有基础实现（`system_profiler` / `bluetoothctl` 轮询）�
 
 **怎么换动画？**
 `--animation D:\my-lottie` 指向任意 Lottie 目录（含 `data.json` 与图片）。
-先用 `npm run preview` 离线把动画渲染成 PNG 看看效果：
+可以先用离线渲染预览一下效果：
 
 ```bash
 npm run preview -- --frames 0,200,600,1000,1400 --out .probe/frames
 ```
 
 **状态目录里有什么？**
-`%LOCALAPPDATA%\bt-anim-overlay`：`run.json`（运行中实例的端口与令牌）、
-`known-devices.json`（扫描记忆）、`logs\bt-anim.log`（日志）、`capture.png`（`capture` 命令的输出）。
+`%LOCALAPPDATA%\bt-anim-overlay`：`run.json`（运行中实例的端口与令牌）、`known-devices.json`（扫描记忆）、`logs\bt-anim.log`（日志）、`capture.png`（`capture` 命令的输出）。
 
 ---
 
 ## 目录结构
 
-```
-animation/            你提供的 Lottie 动画（data.json + images/）
-renderer/             悬浮层页面（lottie-web 播放）
-src/main.js           Electron 主进程：悬浮窗、托盘、控制接口
-src/sensors/          蓝牙传感器（win32 / darwin / linux + PowerShell 脚本）
-src/trigger-engine.js 事件聚合、去重、冷却
-src/control-server.js 本地 HTTP 控制接口（仅 127.0.0.1）
-bin/bt-anim.js        命令行入口（npx 运行的就是它）
-tools/                辅助工具：生成图标、离线渲染预览
-test/                 单元测试 + 传感器集成测试
+```text
+animation/             Lottie 动画（data.json + images/）
+renderer/              悬浮层页面（lottie-web 播放）
+src/main.js            Electron 主进程：悬浮窗、托盘、控制接口
+src/sensors/           蓝牙传感器（win32 / darwin / linux + PowerShell 脚本）
+src/trigger-engine.js  事件聚合、去重、冷却
+src/control-server.js  本地 HTTP 控制接口（仅 127.0.0.1）
+bin/bt-anim.js         命令行入口（npx 运行的就是它）
+tools/                 辅助工具：生成图标、离线渲染预览
+test/                  单元测试 + 传感器集成测试
 ```
 
 ## 开发
@@ -201,5 +195,3 @@ npm run icons          # 重新生成托盘 / 应用图标
 ## 许可
 
 MIT。动画素材版权归原作者所有。
-#   D e l t a F o r c e B l u e t o o t h D e t e c t e d  
- 
