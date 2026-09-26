@@ -7,9 +7,63 @@
 
 ---
 
+## 拉取代码
+
+### 方式一：从 GitHub 克隆（推荐）
+
+```bash
+git clone https://github.com/TFR-Studios/DeltaForceBluetoothDetected.git
+cd DeltaForceBluetoothDetected
+```
+
+如果直连 GitHub 很慢或连不上，可以走代理，或改用镜像站点：
+
+```bash
+# 走本地代理（例如 Steam++ / Clash 的端口）
+git -c http.proxy=http://127.0.0.1:9000 clone https://github.com/TFR-Studios/DeltaForceBluetoothDetected.git
+
+# 或使用 GitHub 镜像
+git clone https://gitclone.com/github.com/TFR-Studios/DeltaForceBluetoothDetected.git
+```
+
+### 方式二：下载压缩包
+
+不想用 git 的话，直接下载 zip 并解压：
+
+- 稳定版：https://github.com/TFR-Studios/DeltaForceBluetoothDetected/archive/refs/heads/main.zip
+- 也可以打开仓库页面，点绿色的 **Code → Download ZIP**
+
+### 克隆之后
+
+```bash
+# 1. 安装依赖（可选：不装也能跑，程序会自己准备 Electron 运行时）
+npm install
+
+# 2. 环境自检，确认动画文件、Electron、蓝牙能力都正常
+npx . doctor
+
+# 3. 启动并播放一次，验证效果
+npx . --test
+```
+
+> 国内网络如果卡在 Electron 下载，先设置镜像再启动：
+>
+> ```bash
+> set ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
+> npx . --test
+> ```
+
+### 更新到最新代码
+
+```bash
+git pull
+```
+
+---
+
 ## 快速开始
 
-在项目目录里直接运行：
+代码拉下来之后（见上一节），在项目目录里直接运行：
 
 ```bash
 # 立刻验证效果：启动并播放一次
